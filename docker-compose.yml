@@ -1,0 +1,52 @@
+version: '3.1'
+services:
+  db:
+    image: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: db
+    command:
+      - '--skip-log-bin'
+    volumes:
+      - ./.docker/mysql/data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: admin
+      PMA_ARBITRARY: 0
+    ports:
+      - 8080:80
+
+  trello:
+    image: node:20-alpine
+    command: npm run dev
+    tty: true
+    working_dir: /app
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    environment:
+      NEXT_TELEMETRY_DISABLED: "1"
+    ports:
+      - "3000:3000"
+
+  studio:
+    image: node:20-alpine
+    command: npx prisma studio
+    tty: true
+    working_dir: /app
+    depends_on:
+      - db
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    ports:
+      - "5555:5555"
+
