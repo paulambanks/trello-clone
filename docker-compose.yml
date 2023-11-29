@@ -34,6 +34,7 @@ services:
       - .:/app
     environment:
       NEXT_TELEMETRY_DISABLED: "1"
+      DATABASE_URL: "mysql://root:admin@db:3306/db?schema=public&connect_timeout=300"
     ports:
       - "3000:3000"
 
@@ -45,6 +46,8 @@ services:
     depends_on:
       - db
     restart: unless-stopped
+    environment:
+      DATABASE_URL: "mysql://root:admin@db:3306/db?schema=public&connect_timeout=300"
     volumes:
       - .:/app
     ports:

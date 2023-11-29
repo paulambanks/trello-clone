@@ -19,9 +19,11 @@ export const Info = () => {
 			<div className="w-[60px] h-[60px] relative">
 				<Image
 					fill
+					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 					src={organization?.imageUrl!}
 					alt="Organization"
 					className="rounded-md object-cover"
+					priority={true}
 				/>
 			</div>
 			<div className="space-y-1">

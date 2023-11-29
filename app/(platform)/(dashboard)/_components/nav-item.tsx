@@ -81,9 +81,11 @@ export const NavItem = ({
 					<div className="w-7 h-7 relative">
 						<Image
 							fill
+							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 							src={organization?.imageUrl}
 							alt="organization image"
 							className="rounded-sm object-cover"
+							priority={true}
 						/>
 					</div>
 					<span className="font-medium text-sm">
